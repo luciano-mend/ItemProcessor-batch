@@ -2,7 +2,6 @@ package br.luciano.ItemProcessor_batch.processor;
 
 import br.luciano.ItemProcessor_batch.dominio.Cliente;
 import org.springframework.batch.item.ItemProcessor;
-import org.springframework.batch.item.support.CompositeItemProcessor;
 import org.springframework.batch.item.support.builder.CompositeItemProcessorBuilder;
 import org.springframework.batch.item.validator.BeanValidatingItemProcessor;
 import org.springframework.batch.item.validator.ValidatingItemProcessor;

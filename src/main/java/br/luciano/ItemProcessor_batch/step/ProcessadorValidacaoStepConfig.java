@@ -8,6 +8,7 @@ import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
 import org.springframework.batch.item.ItemWriter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -20,9 +21,10 @@ public class ProcessadorValidacaoStepConfig {
     @Bean
     public Step processadorValidacaoStep(
             ItemReader<Cliente> processadorValidacaoReader,
-            ItemProcessor<Cliente, Cliente> processadorValidacaoProcessor,
+            @Qualifier("processadorScriptProcessor") ItemProcessor<Cliente, Cliente> processadorValidacaoProcessor,
             ItemWriter<Cliente> processadorValidacaoWriter,
             JobRepository jobRepository) {
+
         return new StepBuilder("processadorValidacaoStep", jobRepository)
                 .<Cliente, Cliente>chunk(1, transactionManager)
                 .reader(processadorValidacaoReader)
