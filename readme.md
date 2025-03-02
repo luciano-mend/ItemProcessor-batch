@@ -17,3 +17,4 @@ arquivoClientes=file:files/clientes.txt
 O projeto contém a utilização de tipos de ItemProcessor.
 - BeanValidatingItemProcessor
 - ValidatingItemProcessor
+- CompositeItemProcessor

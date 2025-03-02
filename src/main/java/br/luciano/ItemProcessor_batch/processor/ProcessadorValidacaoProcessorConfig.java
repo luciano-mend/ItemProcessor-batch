@@ -2,6 +2,8 @@ package br.luciano.ItemProcessor_batch.processor;
 
 import br.luciano.ItemProcessor_batch.dominio.Cliente;
 import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.support.CompositeItemProcessor;
+import org.springframework.batch.item.support.builder.CompositeItemProcessorBuilder;
 import org.springframework.batch.item.validator.BeanValidatingItemProcessor;
 import org.springframework.batch.item.validator.ValidatingItemProcessor;
 import org.springframework.batch.item.validator.ValidationException;
@@ -15,11 +17,22 @@ import java.util.Set;
 @Configuration
 public class ProcessadorValidacaoProcessorConfig {
     private Set<String> emails = new HashSet<>();
-    @Bean
-    public ItemProcessor<Cliente, Cliente> procesadorValidacaoProcessor() {
-//        BeanValidatingItemProcessor<Cliente> processor = new BeanValidatingItemProcessor<>();
-//        processor.setFilter(true);
 
+    @Bean
+    public ItemProcessor<Cliente, Cliente> procesadorValidacaoProcessor() throws Exception {
+        return new CompositeItemProcessorBuilder<Cliente, Cliente>()
+                .delegates(beanValidatingItemProcessor(), emailValidatingProcessor())
+                .build();
+    }
+
+    private BeanValidatingItemProcessor<Cliente> beanValidatingItemProcessor() throws Exception {
+        BeanValidatingItemProcessor<Cliente> processor = new BeanValidatingItemProcessor<>();
+        processor.setFilter(true);
+        processor.afterPropertiesSet();
+        return processor;
+    }
+
+    private ValidatingItemProcessor<Cliente> emailValidatingProcessor() {
         ValidatingItemProcessor<Cliente> processor = new ValidatingItemProcessor<>();
         processor.setValidator(validador());
         processor.setFilter(true);
