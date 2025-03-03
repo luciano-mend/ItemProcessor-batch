@@ -1,6 +1,7 @@
 package br.luciano.ItemProcessor_batch.step;
 
 import br.luciano.ItemProcessor_batch.dominio.Cliente;
+import br.luciano.ItemProcessor_batch.dominio.ClienteTransacao;
 import org.springframework.batch.core.Step;
 import org.springframework.batch.core.repository.JobRepository;
 import org.springframework.batch.core.step.builder.StepBuilder;
@@ -18,15 +19,16 @@ public class ProcessadorValidacaoStepConfig {
     @Autowired
     public PlatformTransactionManager transactionManager;
 
+    @SuppressWarnings({ "rawtypes", "unchecked" })
     @Bean
     public Step processadorValidacaoStep(
-            ItemReader<Cliente> processadorValidacaoReader,
-            @Qualifier("processadorScriptProcessor") ItemProcessor<Cliente, Cliente> processadorValidacaoProcessor,
-            ItemWriter<Cliente> processadorValidacaoWriter,
+            @Qualifier("processadorClassifierReader") ItemReader processadorValidacaoReader,
+            @Qualifier("processadorClassifierProcessor") ItemProcessor processadorValidacaoProcessor,
+            ItemWriter processadorValidacaoWriter,
             JobRepository jobRepository) {
 
         return new StepBuilder("processadorValidacaoStep", jobRepository)
-                .<Cliente, Cliente>chunk(1, transactionManager)
+                .chunk(1, transactionManager)
                 .reader(processadorValidacaoReader)
                 .processor(processadorValidacaoProcessor)
                 .writer(processadorValidacaoWriter)

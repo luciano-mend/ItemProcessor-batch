@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class ProcessadorValidacaoWriterConfig {
     @Bean
-    public ItemWriter<Cliente> processadorValidacaoWriter() {
+    public ItemWriter processadorValidacaoWriter() {
         return clientes -> clientes.forEach(System.out::println);
     }
 }

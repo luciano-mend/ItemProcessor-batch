@@ -5,16 +5,22 @@
 - Java 17
 
 As variáveis de ambiente:
-```shell
+```bash
 DB_USER=nome_banco_dados
 DB_PASSWORD=senha_banco_dados
 ```
 O argumento do local do arquivo:
-```shell
+```bash
 arquivoClientes=file:files/clientes.txt
 ```
+Alterar o arquivo para:
+ScriptItemProcessor = clientesScript.txt
+ClassifierCompositeItemProcessor = clientesClassifier.txt
+
 #### Implementações
 O projeto contém a utilização de tipos de ItemProcessor.
 - BeanValidatingItemProcessor
 - ValidatingItemProcessor
 - CompositeItemProcessor
+- ScriptItemProcessor
+- ClassifierCompositeItemProcessor
